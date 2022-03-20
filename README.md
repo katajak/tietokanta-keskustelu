@@ -1,4 +1,4 @@
-# tietokanta-keskustelu
+# tietokantasovellus
 
 Aihe: Keskustelusovellus
 
