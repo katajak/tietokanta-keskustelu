@@ -1,3 +1,18 @@
-<title>Etusivu</title>
-<h1>Etusivu</h1>
-<b>Tervetuloa</b> <i>sovellukseen</i>!
+<!DOCTYPE html>
+Viestejä yhteensä: {{ count }}
+<hr>
+{% for message in messages %}
+<i>Lähettäjä:</i> {{ message[1] }}
+<p>
+{{ message[0] }}
+<p>
+<i>Lähetetty:</i> {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }}
+<hr>
+{% endfor %}
+{% if session.user_id %}
+Olet kirjautunut sisään.
+<p>
+<a href="/new">Lähetä viesti</a> | <a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a> | <a href="/register">Luo tunnus</a>
+{% endif %}
