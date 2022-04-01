@@ -21,8 +21,8 @@ def logout():
 def register(username, password):
     hash_value = werkzeug.security.generate_password_hash(password)
     try:
-        sql = "INSERT INTO users (username,password) VALUES (:username,:password)"
-        db.session.execute(sql, {"username":username,"password":hash_value})
+        sql = "INSERT INTO users (username, password, admin) VALUES (:username, :password, :admin)"
+        db.session.execute(sql, {"username":username, "password":hash_value, "admin":False})
         db.session.commit()
     except:
         print("Virhe")
