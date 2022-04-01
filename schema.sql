@@ -7,7 +7,8 @@ CREATE TABLE users (
 
 CREATE TABLE areas (
     id SERIAL PRIMARY KEY,
-    title TEXT
+    title TEXT,
+    visible BOOLEAN
 );
 
 CREATE TABLE messages (
@@ -15,5 +16,6 @@ CREATE TABLE messages (
     content TEXT,
     user_id INTEGER REFERENCES users,
     area_id INTEGER REFERENCES areas,
-    sent_at TIMESTAMP
+    sent_at TIMESTAMP,
+    visible BOOLEAN
 );
