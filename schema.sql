@@ -1,4 +1,4 @@
-SET TIMEZONE="Europe/Helsinki";
+SET TIMEZONE='Europe/Helsinki';
 
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS areas CASCADE;
