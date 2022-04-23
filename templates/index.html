@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<a href="/thread">Aloitukset</a>
+<html>
+<head>
+<title>Nyt puhutaan!</title>
+</head>
+<body>
+<h1><a href="/thread">Aloitukset</a></h1>
 <p>
 {% if session.user_id %}
 Olet kirjautunut sisään.
 <p>
-<a href="/new">Lähetä viesti</a> | <a href="/logout">Kirjaudu ulos</a>
+<a href="/logout">Kirjaudu ulos</a>
 {% else %}
 <a href="/login">Kirjaudu sisään</a> | <a href="/register">Luo tunnus</a>
 {% endif %}
+</body>
+</html>

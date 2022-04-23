@@ -30,7 +30,7 @@ def send():
     if len(content) > 4000:
         return render_template("error.html", message = "Viesti on liian pitkä (Max. 4000 merkkiä)")
     if messages.send(content) is True:
-        return redirect("/")
+        return redirect("/message")
     else:
         return render_template("error.html", message = "Et ole kirjautunut sisään")
 
