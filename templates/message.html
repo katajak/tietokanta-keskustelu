@@ -4,9 +4,10 @@
 <title>Nyt puhutaan!</title>
 </head>
 <body>
-<h1>Viestit</h1>
+<h1>Nyt puhutaan! - Keskustelusovellus</h1>
 <p>
-<a href="/">Etusivulle</a>  |  <a href="/thread">Aloitukset</a>
+<a href="/">Etusivulle</a>
+<h2>Viestit ketjussa: {{thread_name}}</h2>	
 <hr>
 Viestejä yhteensä: {{ count }}
 <hr>
@@ -20,9 +21,16 @@ Viestejä yhteensä: {{ count }}
 {% endfor %}
 <p>
 {% if session.user_id %}
-Olet kirjautunut sisään.
+<form method="post">
+    Lähetä viesti:
+    <p>
+    <textarea name="content"></textarea>
+    <br>
+    <input type="submit" value="Lähetä">
+    </form>
+Viestin maksimipituus: 4000 merkkiä
 <p>
-<a href="/new">Lähetä viesti</a>  |  <a href="/logout">Kirjaudu ulos</a>
+<a href="/logout">Kirjaudu ulos</a>
 {% else %}
 <a href="/login">Kirjaudu sisään</a> | <a href="/register">Luo tunnus</a>
 {% endif %}

@@ -4,37 +4,39 @@ from flask import request
 from flask import redirect
 import users
 import messages
+import threads
+import areas
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    arealist = areas.get_arealist()
+    return render_template("index.html", arealist = arealist)
 
-@app.route("/thread")
-def thread():
-    return render_template("thread.html")
+@app.route("/<int:area_id>")
+def thread(area_id):
+    area_name = areas.get_name(area_id)
+    threadlist = threads.get_threads(area_id)
+    return render_template("thread.html", area_name = area_name, threadlist = threadlist)
 
-@app.route("/message")
-def message():
-    messagelist = messages.get_messages()
-    return render_template("message.html", messages = messagelist, count = len(messagelist))
+@app.route("/<int:area_id>/<int:thread_id>", methods = ["GET","POST"])
+def message(area_id, thread_id):
+    if request.method == "GET":
+        thread_name = threads.get_name(thread_id)
+        messagelist = messages.get_messages(area_id, thread_id)
+        return render_template("message.html", messages = messagelist, count = len(messagelist), thread_name = thread_name)
 
-@app.route("/new")
-def new():
-    return render_template("new.html")
+    if request.method == "POST":
+        content = request.form["content"]
+        if len(content) < 1:
+            return render_template("error.html", message = "Et voi lähettää tyhjää viestiä")
+        if len(content) > 4000:
+            return render_template("error.html", message = "Viesti on liian pitkä (Max. 4000 merkkiä)")
+        if messages.send(content, area_id, thread_id) is True:
+            return redirect(request.url)
+        else:
+            return render_template("error.html", message = "Et ole kirjautunut sisään")
 
-@app.route("/send", methods = ["post"])
-def send():
-    content = request.form["content"]
-    if len(content) < 1:
-        return render_template("error.html", message = "Et voi lähettää tyhjää viestiä")
-    if len(content) > 4000:
-        return render_template("error.html", message = "Viesti on liian pitkä (Max. 4000 merkkiä)")
-    if messages.send(content) is True:
-        return redirect("/message")
-    else:
-        return render_template("error.html", message = "Et ole kirjautunut sisään")
-
-@app.route("/login", methods = ["get","post"])
+@app.route("/login", methods = ["GET","POST"])
 def login():
     if request.method == "GET":
         return render_template("login.html")
@@ -51,7 +53,7 @@ def logout():
     users.logout()
     return redirect("/")
 
-@app.route("/register", methods = ["get","post"])
+@app.route("/register", methods = ["GET","POST"])
 def register():
     if request.method == "GET":
         return render_template("register.html")

@@ -4,10 +4,14 @@
 <title>Nyt puhutaan!</title>
 </head>
 <body>
-<h1>Aloitukset</h1>
+<h1>Nyt puhutaan! - Keskustelusovellus</h1>
 <p>
 <a href="/">Etusivulle</a>
+<h2>Aloitukset alueella: {{area_name}}</h2>	
 <hr>
-<a href="/message">Tästä viesteihin</a>
+{% for thread in threadlist %}
+<h3><a href="/{{thread[1]}}/{{ thread[0] }}">{{ thread[2] }}</a></h3>
+<hr>
+{% endfor %}
 </body>
 </html>
