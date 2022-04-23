@@ -1,14 +1,6 @@
 <!DOCTYPE html>
-Viestejä yhteensä: {{ count }}
-<hr>
-{% for message in messages %}
-<i><span style="color:green">Lähettäjä:</span></i> {{ message[1] }}
+<a href="/thread">Aloitukset</a>
 <p>
-{{ message[0] }}
-<p>
-<i><span style="color:green">Lähetetty:</span></i> {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }}
-<hr>
-{% endfor %}
 {% if session.user_id %}
 Olet kirjautunut sisään.
 <p>

@@ -7,8 +7,16 @@ import messages
 
 @app.route("/")
 def index():
+    return render_template("index.html")
+
+@app.route("/thread")
+def thread():
+    return render_template("thread.html")
+
+@app.route("/message")
+def message():
     messagelist = messages.get_messages()
-    return render_template("index.html", messages = messagelist, count = len(messagelist))
+    return render_template("message.html", messages = messagelist, count = len(messagelist))
 
 @app.route("/new")
 def new():
