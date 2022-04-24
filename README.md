@@ -4,6 +4,10 @@
 
 Tällä hetkellä sovelluksessa pystyy luomaan uuden käyttäjän ja kirjautumaan sisään sekä lähettää viestejä.
 
+Nyt pystyy myös luomaan aloituksia ja keskustelualueita, joissa näytetään vain niille laitetut viestit/aloitukset.
+
+Tällä hetkellä kaikki voivat luoda keskustelualueita, järjestelmässä ei ole vielä erikseen ylläpitäjiä.
+
 Voit kokeilla sovellusta Herokussa:
 
 [Tästä sovellukseen](https://nytpuhutaan.herokuapp.com/)
@@ -30,4 +34,4 @@ Sovelluksen ominaisuuksia:
 
 - Ylläpitäjä voi lisätä ja poistaa keskustelualueita.
 
-- Ylläpitäjä voi luoda salaisen alueen ja määrittää, keillä käyttäjillä on pääsy alueelle.
+- Ylläpitäjä voi luoda salaisen alueen vain ylläpitäjille.
