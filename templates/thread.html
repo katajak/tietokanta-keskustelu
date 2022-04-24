@@ -13,5 +13,20 @@
 <h3><a href="/{{thread[1]}}/{{ thread[0] }}">{{ thread[2] }}</a></h3>
 <hr>
 {% endfor %}
+<p>
+{% if session.user_id %}
+<form method="post">
+    Uusi aloitus:
+    <p>
+    <textarea name="thread_title"></textarea>
+    <br>
+    <input type="submit" value="Lähetä">
+    </form>
+Aloituksen maksimipituus: 240 merkkiä
+<p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a> | <a href="/register">Luo tunnus</a>
+{% endif %}
 </body>
 </html>

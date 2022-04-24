@@ -14,6 +14,7 @@ CREATE TABLE users (
 CREATE TABLE areas (
     id SERIAL PRIMARY KEY,
     title TEXT,
+    admin_only BOOLEAN,
     visible BOOLEAN
 );
 

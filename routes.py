@@ -7,18 +7,41 @@ import messages
 import threads
 import areas
 
-@app.route("/")
+@app.route("/", methods = ["GET", "POST"])
 def index():
-    arealist = areas.get_arealist()
-    return render_template("index.html", arealist = arealist)
+    if request.method == "GET":
+        arealist = areas.get_arealist()
+        return render_template("index.html", arealist = arealist)
+    if request.method == "POST":
+        area_name = request.form["area_name"]
+        if len(area_name) < 1:
+            return render_template("error.html", message = "Et voi lähettää tyhjää alueen nimeä")
+        if len(area_name) > 240:
+            return render_template("error.html", message = "Alueen nimi on liian pitkä (Max. 240 merkkiä)")
+        if areas.send(area_name) is True:
+            return redirect(request.url)
+        else:
+            return render_template("error.html", message = "Virhe tapahtui")
 
-@app.route("/<int:area_id>")
+@app.route("/<int:area_id>", methods = ["GET", "POST"])
 def thread(area_id):
-    area_name = areas.get_name(area_id)
-    threadlist = threads.get_threads(area_id)
-    return render_template("thread.html", area_name = area_name, threadlist = threadlist)
+    if request.method == "GET":
+        area_name = areas.get_name(area_id)
+        threadlist = threads.get_threads(area_id)
+        return render_template("thread.html", area_name = area_name, threadlist = threadlist)
 
-@app.route("/<int:area_id>/<int:thread_id>", methods = ["GET","POST"])
+    if request.method == "POST":
+        thread_title = request.form["thread_title"]
+        if len(thread_title) < 1:
+            return render_template("error.html", message = "Et voi lähettää tyhjää aloitusta")
+        if len(thread_title) > 240:
+            return render_template("error.html", message = "Aloitus on liian pitkä (Max. 240 merkkiä)")
+        if threads.send(thread_title, area_id) is True:
+            return redirect(request.url)
+        else:
+            return render_template("error.html", message = "Virhe tapahtui")
+
+@app.route("/<int:area_id>/<int:thread_id>", methods = ["GET", "POST"])
 def message(area_id, thread_id):
     if request.method == "GET":
         thread_name = threads.get_name(thread_id)
@@ -36,7 +59,7 @@ def message(area_id, thread_id):
         else:
             return render_template("error.html", message = "Et ole kirjautunut sisään")
 
-@app.route("/login", methods = ["GET","POST"])
+@app.route("/login", methods = ["GET", "POST"])
 def login():
     if request.method == "GET":
         return render_template("login.html")
@@ -53,7 +76,7 @@ def logout():
     users.logout()
     return redirect("/")
 
-@app.route("/register", methods = ["GET","POST"])
+@app.route("/register", methods = ["GET", "POST"])
 def register():
     if request.method == "GET":
         return render_template("register.html")

@@ -13,6 +13,15 @@
 <hr>
 {% endfor %}
 {% if session.user_id %}
+<form method="post">
+    Uusi keskustelualue:
+    <p>
+    <textarea name="area_name"></textarea>
+    <br>
+    <input type="submit" value="Lähetä">
+    </form>
+Alueen nimen maksimipituus: 240 merkkiä
+<p>
 Olet kirjautunut sisään.
 <p>
 <a href="/logout">Kirjaudu ulos</a>
