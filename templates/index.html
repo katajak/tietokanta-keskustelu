@@ -16,29 +16,23 @@ Alueiden määrä: {{ count }}
 <h3><a href="/{{ area[0] }}">{{ area[1] }}</a></h3>
 <hr>
 {% endfor %}
-{% if session.user_id %}
+{% if session.admin %}
 <form method="post">
     Uusi keskustelualue:
     <p>
     <textarea name="area_name"></textarea>
     <br>
-    {% if session.admin %}
     <input type="checkbox" name="admin_only">
     <label for="admin_only">Vain ylläpitäjille</label>
-    {% endif %}
     <p>
     <input type="submit" value="Lähetä">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
 Alueen nimen maksimipituus: 240 merkkiä
+{% endif %}
 <p>
-{% if not session.admin %}
+{% if session.user_id %}
 Olet kirjautunut sisään.
-{% endif %}
-<p>
-{% if session.admin %}
-Olet kirjautunut sisään <b>ylläpitäjänä</b>.
-{% endif %}
 <p>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
