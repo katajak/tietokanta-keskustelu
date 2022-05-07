@@ -19,6 +19,7 @@
     <textarea name="area_name"></textarea>
     <br>
     <input type="submit" value="Lähetä">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
 Alueen nimen maksimipituus: 240 merkkiä
 <p>

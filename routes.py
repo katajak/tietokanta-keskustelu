@@ -3,6 +3,8 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask import url_for
+from flask import session
+from flask import abort
 import users
 import messages
 import threads
@@ -13,7 +15,10 @@ def index():
     if request.method == "GET":
         arealist = areas.get_arealist()
         return render_template("index.html", arealist = arealist)
+
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         area_name = request.form["area_name"]
         if len(area_name) < 1:
             return render_template("error.html", message = "Et voi lähettää tyhjää alueen nimeä")
@@ -32,6 +37,8 @@ def thread(area_id):
         return render_template("thread.html", area_name = area_name, threadlist = threadlist)
 
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         thread_title = request.form["thread_title"]
         if len(thread_title) < 1:
             return render_template("error.html", message = "Et voi lähettää tyhjää aloitusta")
@@ -50,6 +57,8 @@ def message(area_id, thread_id):
         return render_template("message.html", messages = messagelist, count = len(messagelist), thread_name = thread_name, area_id=area_id, thread_id=thread_id)
 
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         content = request.form["content"]
         if len(content) < 1:
             return render_template("error.html", message = "Et voi lähettää tyhjää viestiä")
@@ -64,7 +73,10 @@ def message(area_id, thread_id):
 def edit_message(area_id, thread_id, message_id):
     if request.method == "GET":
         return render_template("editmessage.html")
+
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         edited = request.form["content"]
         if len(edited) < 1:
             return render_template("error.html", message = "Et voi lähettää tyhjää viestiä")
@@ -79,6 +91,7 @@ def edit_message(area_id, thread_id, message_id):
 def login():
     if request.method == "GET":
         return render_template("login.html")
+
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -96,6 +109,7 @@ def logout():
 def register():
     if request.method == "GET":
         return render_template("register.html")
+
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
