@@ -9,6 +9,7 @@ import users
 import messages
 import threads
 import areas
+import likes
 
 @app.route("/", methods = ["GET", "POST"])
 def index():
@@ -69,7 +70,7 @@ def message(area_id, thread_id):
         else:
             return render_template("error.html", message = "Et ole kirjautunut sisään")
 
-@app.route("/<int:area_id>/<int:thread_id>/<int:message_id>", methods = ["GET", "POST"])
+@app.route("/<int:area_id>/<int:thread_id>/<int:message_id>/edit", methods = ["GET", "POST"])
 def edit_message(area_id, thread_id, message_id):
     if request.method == "GET":
         return render_template("editmessage.html")
@@ -83,9 +84,23 @@ def edit_message(area_id, thread_id, message_id):
         if len(edited) > 4000:
             return render_template("error.html", message = "Viesti on liian pitkä (Max. 4000 merkkiä)")
         if messages.edit(message_id, edited) is True:
-            return redirect(url_for('message', area_id=area_id, thread_id=thread_id))
+            return redirect(url_for('message', area_id = area_id, thread_id = thread_id))
         else:
-            return render_template("error.html", message="Voit muokata vain omia viestejä")
+            return render_template("error.html", message = "Voit muokata vain omia viestejä")
+
+@app.route("/<int:area_id>/<int:thread_id>/<int:message_id>/like", methods = ["GET", "POST"])
+def like_message(area_id, thread_id, message_id):
+    if request.method == "GET":
+        likecount = likes.get_likes(message_id)
+        return render_template("likemessage.html", likecount = likecount)
+
+    if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
+        if likes.like(message_id) is True:
+            return redirect(request.url)
+        else:
+            return render_template("error.html", message = "Olet jo tykännyt viestistä tai et ole kirjautunut sisään.")
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nyt puhutaan!</title>
+</head>
+<body>
+<form method="post">
+    Tykkäysten määrä: {{ likecount[0] }}
+    <p>
+    <input type="submit" value="Tykkää">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    </form>
+</body>
+</html>

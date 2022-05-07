@@ -41,5 +41,6 @@ CREATE TABLE likes (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
     message_id INTEGER REFERENCES messages,
+    UNIQUE (user_id, message_id),
     liked BOOLEAN
 );
