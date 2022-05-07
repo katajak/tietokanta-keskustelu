@@ -43,20 +43,24 @@ def edit(message_id, content):
     return False
 
 def get_average_message_length():
-    sql = "SELECT COALESCE(AVG(LENGTH(content)),0) FROM messages WHERE visible=True"
+    sql = """SELECT COALESCE(AVG(LENGTH(content)),0) FROM messages, areas
+             WHERE messages.visible=True AND messages.area_id=areas.id
+             AND areas.admin_only=False"""
     result = db.session.execute(sql)
     return result.fetchone()
 
 def get_user_with_most_messages():
-    sql = """SELECT users.username, COUNT(*) FROM messages, users
-             WHERE messages.user_id=users.id AND visible=True
-             GROUP BY users.id ORDER BY COUNT(*) DESC LIMIT 1"""
+    sql = """SELECT users.username, COUNT(messages.id) FROM messages, users, areas
+             WHERE messages.user_id=users.id AND messages.area_id=areas.id
+             AND messages.visible=True AND areas.admin_only=False GROUP BY users.id
+             ORDER BY COUNT(messages.id) DESC LIMIT 1"""
     result = db.session.execute(sql)
     return result.fetchone()
 
 def get_most_liked():
-    sql = """SELECT messages.content, COUNT(*) FROM messages, likes
-             WHERE likes.message_id=messages.id AND visible=True
-             GROUP BY messages.id ORDER BY COUNT(*) DESC LIMIT 1"""
+    sql = """SELECT messages.content, COUNT(likes.id) FROM messages, likes, areas
+             WHERE likes.message_id=messages.id AND messages.area_id=areas.id
+             AND messages.visible=True AND likes.liked=True AND areas.admin_only=False
+             GROUP BY messages.id ORDER BY COUNT(likes.id) DESC LIMIT 1"""
     result = db.session.execute(sql)
     return result.fetchone()

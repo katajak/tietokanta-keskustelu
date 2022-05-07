@@ -4,7 +4,7 @@ import werkzeug.security
 import secrets
 
 def login(username, password):
-    sql = "SELECT password, id FROM users WHERE username=:username"
+    sql = "SELECT password, id, admin FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
     if user is None:
@@ -12,6 +12,7 @@ def login(username, password):
     else:
         if werkzeug.security.check_password_hash(user[0], password):
             session["user_id"] = user[1]
+            session["admin"] = user[2]
             session["csrf_token"] = secrets.token_hex(16)
             return True
         else:
@@ -19,6 +20,8 @@ def login(username, password):
 
 def logout():
     del session["user_id"]
+    del session["admin"]
+    del session["csrf_token"]
 
 def register(username, password):
     hash_value = werkzeug.security.generate_password_hash(password)
@@ -33,3 +36,6 @@ def register(username, password):
 
 def user_id():
     return session.get("user_id", 0)
+
+def admin():
+    return session.get("admin")

@@ -4,11 +4,13 @@
 <title>Nyt puhutaan!</title>
 </head>
 <body>
+<hr>
 <i><span style="color:green">Lähettäjä:</span></i> {{ message[1] }}
 <p>
 {{ message[0] }}
 <p>
 <i><span style="color:green">Lähetetty:</span></i> {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }}
+<hr>
 <form method="post">
     Muokkaa viestiä:
     <p>

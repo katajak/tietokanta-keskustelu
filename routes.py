@@ -21,12 +21,13 @@ def index():
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
         area_name = request.form["area_name"]
+        admin_only = "admin_only" in request.form
         if len(area_name) < 1:
             return render_template("error.html", message="Et voi lähettää tyhjää alueen nimeä")
         if len(area_name) > 240:
             return render_template("error.html",
                                    message="Alueen nimi on liian pitkä (Max. 240 merkkiä)")
-        if areas.send(area_name) is True:
+        if areas.send(area_name, admin_only) is True:
             return redirect(request.url)
         else:
             return render_template("error.html", message="Virhe tapahtui")
@@ -34,6 +35,12 @@ def index():
 @app.route("/<int:area_id>", methods=["GET", "POST"])
 def thread(area_id):
     if request.method == "GET":
+        if areas.get_admin_only(area_id) is True:
+            user_id = users.user_id()
+            if user_id == 0:
+                return render_template("error.html", message="Tämä alue on vain ylläpitäjille")
+            if session["admin"] is not True:
+                return render_template("error.html", message="Tämä alue on vain ylläpitäjille")
         area_name = areas.get_name(area_id)
         threadlist = threads.get_threads(area_id)
         return render_template("thread.html",
@@ -56,6 +63,12 @@ def thread(area_id):
 @app.route("/<int:area_id>/<int:thread_id>", methods=["GET", "POST"])
 def message(area_id, thread_id):
     if request.method == "GET":
+        if areas.get_admin_only(area_id) is True:
+            user_id = users.user_id()
+            if user_id == 0:
+                abort(403)
+            if session["admin"] is not True:
+                abort(403)
         thread_name = threads.get_name(thread_id)
         messagelist = messages.get_messages(area_id, thread_id)
         return render_template("message.html", messages=messagelist, count=len(messagelist),
@@ -78,6 +91,12 @@ def message(area_id, thread_id):
 @app.route("/<int:area_id>/<int:thread_id>/<int:message_id>/edit", methods=["GET", "POST"])
 def edit_message(area_id, thread_id, message_id):
     if request.method == "GET":
+        if areas.get_admin_only(area_id) is True:
+            user_id = users.user_id()
+            if user_id == 0:
+                abort(403)
+            if session["admin"] is not True:
+                abort(403)
         message = messages.get_one(area_id, thread_id, message_id)
         return render_template("editmessage.html", message=message)
 
@@ -98,6 +117,12 @@ def edit_message(area_id, thread_id, message_id):
 @app.route("/<int:area_id>/<int:thread_id>/<int:message_id>/like", methods=["GET", "POST"])
 def like_message(area_id, thread_id, message_id):
     if request.method == "GET":
+        if areas.get_admin_only(area_id) is True:
+            user_id = users.user_id()
+            if user_id == 0:
+                abort(403)
+            if session["admin"] is not True:
+                abort(403)
         message = messages.get_one(area_id, thread_id, message_id)
         likecount = likes.get_likes(message_id)
         return render_template("likemessage.html", message=message, likecount=likecount)
