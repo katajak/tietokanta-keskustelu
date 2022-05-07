@@ -78,7 +78,8 @@ def message(area_id, thread_id):
 @app.route("/<int:area_id>/<int:thread_id>/<int:message_id>/edit", methods=["GET", "POST"])
 def edit_message(area_id, thread_id, message_id):
     if request.method == "GET":
-        return render_template("editmessage.html")
+        message = messages.get_one(area_id, thread_id, message_id)
+        return render_template("editmessage.html", message=message)
 
     if request.method == "POST":
         if session["csrf_token"] != request.form["csrf_token"]:
@@ -97,8 +98,9 @@ def edit_message(area_id, thread_id, message_id):
 @app.route("/<int:area_id>/<int:thread_id>/<int:message_id>/like", methods=["GET", "POST"])
 def like_message(area_id, thread_id, message_id):
     if request.method == "GET":
+        message = messages.get_one(area_id, thread_id, message_id)
         likecount = likes.get_likes(message_id)
-        return render_template("likemessage.html", likecount=likecount)
+        return render_template("likemessage.html", message=message, likecount=likecount)
 
     if request.method == "POST":
         if session["csrf_token"] != request.form["csrf_token"]:
