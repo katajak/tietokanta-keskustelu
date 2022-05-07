@@ -17,6 +17,8 @@ Viestejä yhteensä: {{ count }}
 {{ message[0] }}
 <p>
 <i><span style="color:green">Lähetetty:</span></i> {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }}
+<p>
+<a href="/{{area_id}}/{{thread_id}}/{{ message[3] }}">Muokkaa viestiä</a>
 <hr>
 {% endfor %}
 <p>

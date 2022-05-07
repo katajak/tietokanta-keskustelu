@@ -2,6 +2,7 @@ from app import app
 from flask import render_template
 from flask import request
 from flask import redirect
+from flask import url_for
 import users
 import messages
 import threads
@@ -46,7 +47,7 @@ def message(area_id, thread_id):
     if request.method == "GET":
         thread_name = threads.get_name(thread_id)
         messagelist = messages.get_messages(area_id, thread_id)
-        return render_template("message.html", messages = messagelist, count = len(messagelist), thread_name = thread_name)
+        return render_template("message.html", messages = messagelist, count = len(messagelist), thread_name = thread_name, area_id=area_id, thread_id=thread_id)
 
     if request.method == "POST":
         content = request.form["content"]
@@ -58,6 +59,21 @@ def message(area_id, thread_id):
             return redirect(request.url)
         else:
             return render_template("error.html", message = "Et ole kirjautunut sisään")
+
+@app.route("/<int:area_id>/<int:thread_id>/<int:message_id>", methods = ["GET", "POST"])
+def edit_message(area_id, thread_id, message_id):
+    if request.method == "GET":
+        return render_template("editmessage.html")
+    if request.method == "POST":
+        edited = request.form["content"]
+        if len(edited) < 1:
+            return render_template("error.html", message = "Et voi lähettää tyhjää viestiä")
+        if len(edited) > 4000:
+            return render_template("error.html", message = "Viesti on liian pitkä (Max. 4000 merkkiä)")
+        if messages.edit(message_id, edited) is True:
+            return redirect(url_for('message', area_id=area_id, thread_id=thread_id))
+        else:
+            return render_template("error.html", message="Voit muokata vain omia viestejä")
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
