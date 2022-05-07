@@ -30,3 +30,18 @@ def edit(id, content):
         db.session.commit()
         return True
     return False
+
+def get_average_message_length():
+    sql = "SELECT COALESCE(AVG(LENGTH(content)),0) FROM messages"
+    result = db.session.execute(sql)
+    return result.fetchone()
+
+def get_user_with_most_messages():
+    sql = "SELECT users.username, COUNT(*) FROM messages, users WHERE messages.user_id=users.id GROUP BY users.id ORDER BY COUNT(*) DESC"
+    result = db.session.execute(sql)
+    return result.fetchone()
+
+def get_most_liked():
+    sql = "SELECT messages.content, COUNT(*) FROM messages, likes WHERE likes.message_id=messages.id GROUP BY messages.id ORDER BY COUNT(*) DESC"
+    result = db.session.execute(sql)
+    return result.fetchone()

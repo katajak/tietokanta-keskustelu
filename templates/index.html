@@ -6,7 +6,11 @@
 <body>
 <h1>Nyt puhutaan! - Keskustelusovellus</h1>
 <p>
+<a href="/statistics">Tilastoja</a>
+<p>
 <h2>Keskustelualueet</h2>
+<hr>
+Alueiden määrä: {{ count }}
 <hr>
 {% for area in arealist %}
 <h3><a href="/{{ area[0] }}">{{ area[1] }}</a></h3>

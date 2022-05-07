@@ -9,8 +9,11 @@
 <a href="/">Etusivulle</a>
 <h2>Aloitukset alueella: {{area_name}}</h2>	
 <hr>
+Aloitusten määrä: {{ count }}
+<hr>
 {% for thread in threadlist %}
 <h3><a href="/{{thread[1]}}/{{ thread[0] }}">{{ thread[2] }}</a></h3>
+<i><span style="color:blue">Ketju aloitettu:</span></i> {{ thread[4].strftime("%Y-%m-%d %H:%M:%S") }}
 <hr>
 {% endfor %}
 <p>

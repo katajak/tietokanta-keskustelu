@@ -15,7 +15,7 @@ import likes
 def index():
     if request.method == "GET":
         arealist = areas.get_arealist()
-        return render_template("index.html", arealist = arealist)
+        return render_template("index.html", arealist = arealist, count = len(arealist))
 
     if request.method == "POST":
         if session["csrf_token"] != request.form["csrf_token"]:
@@ -35,7 +35,7 @@ def thread(area_id):
     if request.method == "GET":
         area_name = areas.get_name(area_id)
         threadlist = threads.get_threads(area_id)
-        return render_template("thread.html", area_name = area_name, threadlist = threadlist)
+        return render_template("thread.html", area_name = area_name, threadlist = threadlist, count = len(threadlist))
 
     if request.method == "POST":
         if session["csrf_token"] != request.form["csrf_token"]:
@@ -134,3 +134,15 @@ def register():
             return redirect("/")
         else:
             return render_template("error.html", message = "Käyttäjänimi on jo olemassa")
+
+@app.route("/statistics", methods = ["GET"])
+def stats():
+    if request.method == "GET":
+        avglen = messages.get_average_message_length()
+        mostmessages = messages.get_user_with_most_messages()
+        if mostmessages is None:
+            mostmessages = ("Ei dataa / No data available", 0)
+        mostliked = messages.get_most_liked()
+        if mostliked is None:
+            mostliked = ("Ei dataa / No data available", 0)
+        return render_template("stats.html", avglen = avglen, mostmessages = mostmessages, mostliked = mostliked)
