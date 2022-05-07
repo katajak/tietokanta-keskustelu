@@ -6,7 +6,8 @@ def like(message_id):
     if user_id == 0:
         return False
     try:
-        sql = "INSERT INTO likes (user_id, message_id, liked) VALUES (:user_id, :message_id, :liked)"
+        sql = """INSERT INTO likes (user_id, message_id, liked)
+                 VALUES (:user_id, :message_id, :liked)"""
         db.session.execute(sql, {"user_id":user_id, "message_id":message_id, "liked":True})
         db.session.commit()
         return True

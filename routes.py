@@ -24,7 +24,8 @@ def index():
         if len(area_name) < 1:
             return render_template("error.html", message="Et voi lähettää tyhjää alueen nimeä")
         if len(area_name) > 240:
-            return render_template("error.html", message="Alueen nimi on liian pitkä (Max. 240 merkkiä)")
+            return render_template("error.html",
+                                   message="Alueen nimi on liian pitkä (Max. 240 merkkiä)")
         if areas.send(area_name) is True:
             return redirect(request.url)
         else:
@@ -35,7 +36,8 @@ def thread(area_id):
     if request.method == "GET":
         area_name = areas.get_name(area_id)
         threadlist = threads.get_threads(area_id)
-        return render_template("thread.html", area_name=area_name, threadlist=threadlist, count=len(threadlist))
+        return render_template("thread.html",
+                               area_name=area_name, threadlist=threadlist, count=len(threadlist))
 
     if request.method == "POST":
         if session["csrf_token"] != request.form["csrf_token"]:
@@ -44,7 +46,8 @@ def thread(area_id):
         if len(thread_title) < 1:
             return render_template("error.html", message="Et voi lähettää tyhjää aloitusta")
         if len(thread_title) > 240:
-            return render_template("error.html", message="Aloitus on liian pitkä (Max. 240 merkkiä)")
+            return render_template("error.html",
+                                   message="Aloitus on liian pitkä (Max. 240 merkkiä)")
         if threads.send(thread_title, area_id) is True:
             return redirect(request.url)
         else:
@@ -55,7 +58,8 @@ def message(area_id, thread_id):
     if request.method == "GET":
         thread_name = threads.get_name(thread_id)
         messagelist = messages.get_messages(area_id, thread_id)
-        return render_template("message.html", messages=messagelist, count=len(messagelist), thread_name=thread_name, area_id=area_id, thread_id=thread_id)
+        return render_template("message.html", messages=messagelist, count=len(messagelist),
+                               thread_name=thread_name, area_id=area_id, thread_id=thread_id)
 
     if request.method == "POST":
         if session["csrf_token"] != request.form["csrf_token"]:
@@ -64,7 +68,8 @@ def message(area_id, thread_id):
         if len(content) < 1:
             return render_template("error.html", message="Et voi lähettää tyhjää viestiä")
         if len(content) > 4000:
-            return render_template("error.html", message="Viesti on liian pitkä (Max. 4000 merkkiä)")
+            return render_template("error.html",
+                                   message="Viesti on liian pitkä (Max. 4000 merkkiä)")
         if messages.send(content, area_id, thread_id) is True:
             return redirect(request.url)
         else:
@@ -82,7 +87,8 @@ def edit_message(area_id, thread_id, message_id):
         if len(edited) < 1:
             return render_template("error.html", message="Et voi lähettää tyhjää viestiä")
         if len(edited) > 4000:
-            return render_template("error.html", message="Viesti on liian pitkä (Max. 4000 merkkiä)")
+            return render_template("error.html",
+                                   message="Viesti on liian pitkä (Max. 4000 merkkiä)")
         if messages.edit(message_id, edited) is True:
             return redirect(url_for('message', area_id=area_id, thread_id=thread_id))
         else:
@@ -100,7 +106,8 @@ def like_message(area_id, thread_id, message_id):
         if likes.like(message_id) is True:
             return redirect(request.url)
         else:
-            return render_template("error.html", message="Olet jo tykännyt viestistä tai et ole kirjautunut sisään.")
+            return render_template("error.html", message="""Olet jo tykännyt viestistä
+                                                            tai et ole kirjautunut sisään.""")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -145,4 +152,5 @@ def stats():
         mostliked = messages.get_most_liked()
         if mostliked is None:
             mostliked = ("Ei dataa / No data available", 0)
-        return render_template("stats.html", avglen=avglen, mostmessages=mostmessages, mostliked=mostliked)
+        return render_template("stats.html", avglen=avglen,
+                               mostmessages=mostmessages, mostliked=mostliked)
