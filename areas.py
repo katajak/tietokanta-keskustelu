@@ -6,9 +6,9 @@ def get_arealist():
     result = db.session.execute(sql)
     return result.fetchall()
 
-def get_name(id):
+def get_name(area_id):
     sql = "SELECT title FROM areas WHERE id=:id AND visible=True"
-    result = db.session.execute(sql, {"id":id})
+    result = db.session.execute(sql, {"id":area_id})
     return result.fetchone()[0]
 
 def send(title):

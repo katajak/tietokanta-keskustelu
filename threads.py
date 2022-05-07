@@ -6,9 +6,9 @@ def get_threads(area_id):
     result = db.session.execute(sql, {"area_id":area_id})
     return result.fetchall()
 
-def get_name(id):
+def get_name(thread_id):
     sql = "SELECT title FROM threads WHERE id=:id AND visible=True"
-    result = db.session.execute(sql, {"id":id})
+    result = db.session.execute(sql, {"id":thread_id})
     return result.fetchone()[0]
 
 def send(title, area_id):

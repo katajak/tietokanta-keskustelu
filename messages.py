@@ -17,16 +17,16 @@ def send(content, area_id, thread_id):
     db.session.commit()
     return True
 
-def edit(id, content):
+def edit(message_id, content):
     user_id = users.user_id()
     if user_id == 0:
         return False
     sql = "SELECT user_id FROM messages WHERE id=:id"
-    result = db.session.execute(sql, {"id":id})
+    result = db.session.execute(sql, {"id":message_id})
     m_user_id = result.fetchone()[0]
     if user_id == m_user_id:
         sql = "UPDATE messages SET content=:content WHERE id=:id"
-        db.session.execute(sql, {"id":id, "content":content})
+        db.session.execute(sql, {"id":message_id, "content":content})
         db.session.commit()
         return True
     return False

@@ -10,7 +10,7 @@ def login(username, password):
     if user == None:
         return False
     else:
-        if werkzeug.security.check_password_hash(user[0],password):
+        if werkzeug.security.check_password_hash(user[0], password):
             session["user_id"] = user[1]
             session["csrf_token"] = secrets.token_hex(16)
             return True
@@ -32,4 +32,4 @@ def register(username, password):
     return login(username, password)
 
 def user_id():
-    return session.get("user_id",0)
+    return session.get("user_id", 0)
