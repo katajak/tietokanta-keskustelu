@@ -101,6 +101,8 @@ def edit_message(area_id, thread_id, message_id):
         return render_template("editmessage.html", message=message)
 
     if request.method == "POST":
+        if users.user_id() == 0:
+            return render_template("error.html", message="Et ole kirjautunut sisään")
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
         edited = request.form["content"]
@@ -128,6 +130,8 @@ def like_message(area_id, thread_id, message_id):
         return render_template("likemessage.html", message=message, likecount=likecount)
 
     if request.method == "POST":
+        if users.user_id() == 0:
+            return render_template("error.html", message="Et ole kirjautunut sisään")
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
         if likes.like(message_id) is True:

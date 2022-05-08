@@ -12,7 +12,8 @@ def get_one(area_id, thread_id, message_id):
     sql = """SELECT M.content, U.username, M.sent_at, M.id FROM messages M, users U
              WHERE M.user_id=U.id AND area_id=:area_id AND thread_id=:thread_id AND
              M.id=:message_id AND M.visible=True"""
-    result = db.session.execute(sql, {"area_id":area_id, "thread_id":thread_id, "message_id":message_id})
+    result = db.session.execute(sql, {"area_id":area_id, "thread_id":thread_id,
+                                      "message_id":message_id})
     return result.fetchone()
 
 def send(content, area_id, thread_id):
