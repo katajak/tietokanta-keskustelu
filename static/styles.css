@@ -1,0 +1,10 @@
+body {
+    margin: auto;
+    max-width: 45em;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}

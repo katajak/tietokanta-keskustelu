@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="/static/styles.css">
 <head>
 <title>Nyt puhutaan!</title>
 </head>
 <body>
+<h2>Kirjaudu sisään</h2>
 <form action="/login" method="post">
-    Tunnus: <input type="text" name="username">
+    Tunnus: <input type="text" cols="20" name="username">
     <p>
-    Salasana: <input type="password" name="password">
+    Salasana: <input type="password" cols="20" name="password">
     <p>
     <input type="submit" value="Kirjaudu">
     </form>

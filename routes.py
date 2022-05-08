@@ -164,6 +164,8 @@ def register():
         password = request.form["password"]
         if len(username) < 3 or len(password) < 3:
             return render_template("error.html", message="Käyttäjänimi tai salasana liian lyhyt")
+        if len(username) > 20 or len(password) > 20:
+            return render_template("error.html", message="Käyttäjänimi tai salasana liian pitkä")
         if users.register(username, password) is True:
             return redirect("/")
         else:
@@ -174,10 +176,11 @@ def stats():
     if request.method == "GET":
         avglen = messages.get_average_message_length()
         mostmessages = messages.get_user_with_most_messages()
+        number_of_users = users.get_number()
         if mostmessages is None:
             mostmessages = ("Ei dataa / No data available", 0)
         mostliked = messages.get_most_liked()
         if mostliked is None:
             mostliked = ("Ei dataa / No data available", 0)
-        return render_template("stats.html", avglen=avglen,
-                               mostmessages=mostmessages, mostliked=mostliked)
+        return render_template("stats.html", avglen=avglen, mostmessages=mostmessages,
+                               mostliked=mostliked, number_of_users=number_of_users)

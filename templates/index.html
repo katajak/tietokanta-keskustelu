@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="/static/styles.css">
 <head>
 <title>Nyt puhutaan!</title>
 </head>
@@ -20,7 +21,7 @@ Alueiden määrä: {{ count }}
 <form method="post">
     Uusi keskustelualue:
     <p>
-    <textarea name="area_name"></textarea>
+    <textarea name="area_name" rows="4" cols="50" minlength="1" maxlength="240"></textarea>
     <br>
     <input type="checkbox" name="admin_only">
     <label for="admin_only">Vain ylläpitäjille</label>

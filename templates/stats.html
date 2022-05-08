@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="/static/styles.css">
 <head>
 <title>Nyt puhutaan!</title>
 </head>
@@ -8,6 +9,8 @@
 <p>
 <a href="/">Etusivulle</a>
 <h2>Tilastoja</h2>
+<p>
+Keskustelusovelluksessa on yhteensä {{ number_of_users }} käyttäjää.
 <p>
 Keskimääräinen viestin pituus: <b>{{ avglen[0]|round(2) }}</b> merkkiä.
 <p>

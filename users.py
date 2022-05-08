@@ -39,3 +39,8 @@ def user_id():
 
 def admin():
     return session.get("admin")
+
+def get_number():
+    sql = "SELECT COUNT(id) FROM users"
+    result = db.session.execute(sql)
+    return result.fetchone()[0]

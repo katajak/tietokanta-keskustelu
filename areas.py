@@ -2,7 +2,7 @@ from db import db
 import users
 
 def get_arealist():
-    sql = "SELECT id, title FROM areas WHERE visible=True ORDER BY id"
+    sql = "SELECT id, title FROM areas WHERE visible=True ORDER BY admin_only, id"
     result = db.session.execute(sql)
     return result.fetchall()
 

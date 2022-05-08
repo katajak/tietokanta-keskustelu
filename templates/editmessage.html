@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="/static/styles.css">
 <head>
 <title>Nyt puhutaan!</title>
 </head>
 <body>
+<h2>Muokkaa viestiä</h2>
 <hr>
 <i><span style="color:green">Lähettäjä:</span></i> {{ message[1] }}
 <p>
@@ -14,7 +16,7 @@
 <form method="post">
     Muokkaa viestiä:
     <p>
-    <textarea name="content"></textarea>
+    <textarea name="content" rows="4" cols="50" minlength="1" maxlength="4000"></textarea>
     <p>
     <input type="submit" value="Muokkaa">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">

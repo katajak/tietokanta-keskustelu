@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="/static/styles.css">
 <head>
 <title>Nyt puhutaan!</title>
 </head>
@@ -26,7 +27,7 @@ Viestejä yhteensä: {{ count }}
 <form method="post">
     Lähetä viesti:
     <p>
-    <textarea name="content"></textarea>
+    <textarea name="content" rows="4" cols="50" minlength="1" maxlength="4000"></textarea>
     <br>
     <input type="submit" value="Lähetä">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
