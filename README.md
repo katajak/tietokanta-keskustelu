@@ -1,8 +1,8 @@
 # Nyt puhutaan!
 
-## Ohjeet
-
 Foorumityyppinen keskustelusovellus
+
+## Ohjeet
 
 Sovelluksessa on yksi admin käyttäjä:
 
@@ -36,6 +36,6 @@ Sovelluksen ominaisuuksia:
 
 - Ylläpitäjä voi luoda salaisen alueen vain ylläpitäjille.
 
-- Etusivulta pääsee tilastosivulle, jossa näytetään kiinnostavia tilastoja.
+- Etusivulta pääsee tilastosivulle, jossa näytetään mielenkiintoisia tilastoja.
 
 - Viestin poisto-ominaisuus jäi ajanpuutteen takia tekemättä.
