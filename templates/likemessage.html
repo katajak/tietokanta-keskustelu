@@ -13,11 +13,13 @@
 <p>
 <i><span style="color:green">Lähetetty:</span></i> {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }}
 <hr>
+<p>
+Tykkäysten määrä: {{ likecount[0] }}
+{% if session.user_id %}
 <form method="post">
-    Tykkäysten määrä: {{ likecount[0] }}
-    <p>
     <input type="submit" value="Tykkää">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
+{% endif %}
 </body>
 </html>
