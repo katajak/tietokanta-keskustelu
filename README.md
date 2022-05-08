@@ -4,6 +4,12 @@
 
 Foorumityyppinen keskustelusovellus
 
+Sovelluksessa on yksi admin käyttäjä:
+
+Tunnus: TestiAdmin
+
+Salasana: testi123
+
 Voit kokeilla sovellusta Herokussa:
 
 [Tästä sovellukseen](https://nytpuhutaan.herokuapp.com/)
@@ -31,3 +37,5 @@ Sovelluksen ominaisuuksia:
 - Ylläpitäjä voi luoda salaisen alueen vain ylläpitäjille.
 
 - Etusivulta pääsee tilastosivulle, jossa näytetään kiinnostavia tilastoja.
+
+- Viestin poisto-ominaisuus jäi ajanpuutteen takia tekemättä.
