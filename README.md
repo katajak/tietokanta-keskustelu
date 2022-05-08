@@ -1,20 +1,14 @@
 # Nyt puhutaan!
 
-## Nykyinen tilanne
+## Ohjeet
 
-Tällä hetkellä sovelluksessa pystyy luomaan uuden käyttäjän ja kirjautumaan sisään sekä lähettää viestejä.
-
-Nyt pystyy myös luomaan aloituksia ja keskustelualueita, joissa näytetään vain niille laitetut viestit/aloitukset.
-
-Tällä hetkellä kaikki voivat luoda keskustelualueita, järjestelmässä ei ole vielä erikseen ylläpitäjiä.
+Foorumityyppinen keskustelusovellus
 
 Voit kokeilla sovellusta Herokussa:
 
 [Tästä sovellukseen](https://nytpuhutaan.herokuapp.com/)
 
-## Tavoitteet
-
-Aihe: Keskustelusovellus
+## Ominaisuudet
 
 Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueilla on keskusteluketjuja, jotka muodostuvat viesteistä. Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä.
 
@@ -22,16 +16,18 @@ Sovelluksen ominaisuuksia:
 
 - Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.
 
-- Käyttäjä näkee sovelluksen etusivulla listan alueista sekä jokaisen alueen ketjujen ja viestien määrän ja viimeksi lähetetyn viestin ajankohdan.
+- Käyttäjä näkee sovelluksen etusivulla listan alueista sekä alueiden määrän.
 
-- Käyttäjä voi luoda alueelle uuden ketjun antamalla ketjun otsikon ja aloitusviestin sisällön.
+- Käyttäjä voi luoda alueelle uuden ketjun antamalla ketjun otsikon.
 
 - Käyttäjä voi kirjoittaa uuden viestin olemassa olevaan ketjuun.
 
-- Käyttäjä voi muokata luomansa ketjun otsikkoa sekä lähettämänsä viestin sisältöä. Käyttäjä voi myös poistaa ketjun tai viestin.
+- Käyttäjä voi muokata lähettämänsä viestin sisältöä.
 
-- Käyttäjä voi etsiä kaikki viestit, joiden osana on annettu sana.
+- Käyttäjä voi tykätä viestistä.
 
 - Ylläpitäjä voi lisätä ja poistaa keskustelualueita.
 
 - Ylläpitäjä voi luoda salaisen alueen vain ylläpitäjille.
+
+- Etusivulta pääsee tilastosivulle, jossa näytetään kiinnostavia tilastoja.
