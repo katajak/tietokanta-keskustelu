@@ -32,7 +32,7 @@ Sovelluksen ominaisuuksia:
 
 - Käyttäjä voi tykätä viestistä.
 
-- Ylläpitäjä voi lisätä ja poistaa keskustelualueita.
+- Ylläpitäjä voi lisätä keskustelualueita.
 
 - Ylläpitäjä voi luoda salaisen alueen vain ylläpitäjille.
 
